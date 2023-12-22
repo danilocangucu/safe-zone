@@ -1,0 +1,58 @@
+.welcome-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20vh;
+}
+
+.welcome-container h1 {
+    font-size: 60px;
+    font-weight: 200;
+    color: aliceblue;
+}
+
+.login-sign-up-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+mat-card {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+
+    mat-card-title {
+        font-size: 24px;
+        color: aliceblue;
+    }
+
+    mat-form-field {
+        width: 100%;
+        margin-top: 20px;
+        input {
+            font-size: 16px;
+        }
+    }
+
+        .radio-button-group {
+            margin-top: 20px;
+            display: flex;
+        }
+
+        .sign-up-button {
+            display: block;
+            margin: 10px auto;
+        }
+}
+
+.loading-gif {
+    position: relative;
+    left: 46.3%;
+    top: 30%;
+    width: 150px;
+    height: 150px;
+    display: block;
+  }

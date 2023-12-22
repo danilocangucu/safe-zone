@@ -1,0 +1,45 @@
+<app-navbar></app-navbar>
+<app-notifications></app-notifications>
+<div *ngIf="loadingProducts" class="loading-products">
+  <img class="loading-gif" src="https://i.gifer.com/ZKZg.gif" alt="">
+  <div class="loading-products-message">Loading products...</div>
+</div>
+<div *ngIf="products && products.length > 0; else noProductsTemplate">
+  <div class="product-container">
+    <mat-card *ngFor="let product of products">
+      <mat-card-header>
+        <mat-card-title>{{ product.name }}</mat-card-title>
+        <mat-card-subtitle>{{ product.description }}</mat-card-subtitle>
+      </mat-card-header>
+      <div class="image-overlay-container">
+        <div *ngIf="product.media?.length === 0; else imageSlider" class="image-size">
+          <img [src]="" alt="{{ product.name }}" />
+        </div>
+        <ng-template #imageSlider>
+          <div class="image-slider">
+            <div *ngFor="let image of product.media; let i = index">
+              <img *ngIf="i === product.currentImageIndex" class="image-size" [src]="image" alt="{{ product.name }}" />
+            </div>
+            <button class="slider-nav-button prev-button" *ngIf="product.media.length > 1" (click)="previousImage(product.id)">❮</button>
+            <button class="slider-nav-button next-button" *ngIf="product.media.length > 1" (click)="nextImage(product.id)">❯</button>
+          </div>
+          <div class="slider-indicators" *ngIf="product.media.length > 1">
+            <span *ngFor="let image of product.media; let i = index" class="slider-dot" [class.active-dot]="i === product.currentImageIndex" (click)="setProductImageIndex(product.id, i)"></span>
+          </div>
+        </ng-template>
+          </div>
+      <mat-card-content>
+        <p>
+          Price: {{ product.price }} 💰 <br />
+          Quantity: {{ product.quantity }} 📦
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<ng-template #noProductsTemplate>
+  <div *ngIf="!loadingProducts" class="no-products-message">
+    No products available.
+  </div>
+</ng-template>

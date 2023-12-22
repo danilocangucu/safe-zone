@@ -1,0 +1,31 @@
+<mat-toolbar class="navbar">
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="menu"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span class="site-name">
+    <a (click)="navigate('product-listing')">Public products</a>
+  </span>
+  <span class="user-name">
+    <a (click)="navigate('profile')">{{ userName | async }}</a>-&nbsp;
+  </span>
+  <ng-container *ngIf="(userRole | async) as userRole$">
+    <span [ngSwitch]="userRole$">
+      <span *ngSwitchCase="'USER_CLIENT'"> Client</span>
+      <span *ngSwitchCase="'USER_SELLER'"> Seller</span>
+      <span *ngSwitchDefault>Role: Unknown</span>
+    </span>
+  </ng-container>
+
+
+  <span class="spacer"></span>
+  <button mat-button (click)="signOut()">🔐 Sign Out</button>
+</mat-toolbar>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="navigate('profile')">Profile</button>
+  <button mat-menu-item (click)="navigate('product-listing')">Public products</button>
+  <button *ngIf="(userRole | async) == 'USER_SELLER'" mat-menu-item (click)="navigate('products-management')">Product management</button>
+</mat-menu>

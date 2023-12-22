@@ -1,0 +1,31 @@
+pipeline {
+   agent any
+   environment {
+      PATH = "$PATH:/usr/local/bin"
+    }
+   stages {
+       stage('Build') {
+           steps {
+              sh 'docker-compose build'
+           }
+       }
+       stage('Test') {
+           steps {
+               echo 'Testing..'
+               sh 'docker-compose up -d'
+               dir('backend/users') {
+               sh './gradlew test'
+               }
+               sh 'docker-compose down'
+           }
+       }
+       stage('Deploy') {
+           steps {
+               echo 'Deploying!!!!'
+               **** **** -p **** registry.digitalocean.com
+               docker tag buy-01-users-service:latest registry.digitalocean.com/docker-jenkins/buy-01-users-service:latest
+               docker push registry.digitalocean.com/docker-jenkins/buy-01-users-service:latest
+           }
+       }
+   }
+}

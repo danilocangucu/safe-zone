@@ -1,0 +1,93 @@
+version: "3.8"
+
+services:
+  users-service:
+    build:
+      context: ./backend/users
+      dockerfile: Dockerfile
+    ports:
+      - "${SERVER_PORT_USERS}:${SERVER_PORT_USERS}"
+    volumes:
+      - ./backend/shared-resources:/app/shared-resources
+    environment:
+      SPRING_DATA_MONGODB_URI: ${MONGODB_URI_USERS}
+      SPRING_DATA_MONGODB_DATABASE: buy-01_users
+      SERVER_PORT: ${SERVER_PORT_USERS}
+      SERVER_SSL_KEY-STORE-TYPE: PKCS12
+      SERVER_SSL_KEY-STORE: ${SSL_KEY_STORE}
+      SERVER_SSL_KEY-STORE-PASSWORD: ${SSL_KEY_STORE_PASSWORD}
+      SERVER_SSL_KEY-ALIAS: ${SSL_KEY_ALIAS}
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS}
+    depends_on:
+      - kafka
+
+  products-service:
+    build:
+      context: ./backend/products
+      dockerfile: Dockerfile
+    ports:
+      - "${SERVER_PORT_PRODUCTS}:${SERVER_PORT_PRODUCTS}"
+    volumes:
+      - ./backend/shared-resources:/app/shared-resources
+    environment:
+      SPRING_DATA_MONGODB_URI: ${MONGODB_URI_PRODUCTS}
+      SPRING_DATA_MONGODB_DATABASE: buy-01_products
+      SERVER_PORT: ${SERVER_PORT_PRODUCTS}
+      SERVER_SSL_KEY-STORE-TYPE: PKCS12
+      SERVER_SSL_KEY-STORE: ${SSL_KEY_STORE}
+      SERVER_SSL_KEY-STORE-PASSWORD: ${SSL_KEY_STORE_PASSWORD}
+      SERVER_SSL_KEY-ALIAS: ${SSL_KEY_ALIAS}
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS}
+    depends_on:
+      - kafka
+
+  media-service:
+    build:
+      context: ./backend/media
+      dockerfile: Dockerfile
+    ports:
+      - "${SERVER_PORT_MEDIA}:${SERVER_PORT_MEDIA}"
+    volumes:
+      - ./backend/shared-resources:/app/shared-resources
+    environment:
+      SPRING_DATA_MONGODB_URI:  ${MONGODB_URI_MEDIA}
+      SPRING_DATA_MONGODB_DATABASE: buy-01_media
+      SERVER_PORT: ${SERVER_PORT_MEDIA}
+      SERVER_SSL_KEY-STORE-TYPE: PKCS12
+      SERVER_SSL_KEY-STORE: ${SSL_KEY_STORE}
+      SERVER_SSL_KEY-STORE-PASSWORD: ${SSL_KEY_STORE_PASSWORD}
+      SERVER_SSL_KEY-ALIAS: ${SSL_KEY_ALIAS}
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS}
+    depends_on:
+      - kafka
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "${SERVER_PORT_FRONTEND}:${SERVER_PORT_FRONTEND}"
+    depends_on:
+      - users-service
+      - products-service
+      - media-service
+
+  zookeeper:
+    image: "confluentinc/cp-zookeeper:latest"
+    ports:
+      - "${ZOOKEEPER_CLIENT_PORT}:${ZOOKEEPER_CLIENT_PORT}"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: ${ZOOKEEPER_CLIENT_PORT}
+      ZOOKEEPER_TICK_TIME: ${ZOOKEEPER_TICK_TIME}
+
+  kafka:
+    image: "confluentinc/cp-kafka:latest"
+    ports:
+      - "${KAFKA_PORTS}:${KAFKA_PORTS}"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: ${KAFKA_ZOOKEEPER_CONNECT}
+      KAFKA_ADVERTISED_LISTENERS: ${KAFKA_ADVERTISED_LISTENERS}
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+      - zookeeper

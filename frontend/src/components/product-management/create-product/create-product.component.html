@@ -1,0 +1,40 @@
+<h2 mat-dialog-title>Create New Product</h2>
+
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit($event)" enctype="multipart/form-data">
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" required />
+      <mat-error *ngIf="productForm.get('name')?.invalid">Invalid name</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" required></textarea>
+      <mat-error *ngIf="productForm.get('description')?.invalid">Invalid Description</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Price</mat-label>
+      <input matInput formControlName="price" type="number" required />
+      <mat-error *ngIf="productForm.get('price')?.invalid">Invalid Price</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Quantity</mat-label>
+      <input matInput formControlName="quantity" type="number" required />
+      <mat-error *ngIf="productForm.get('quantity')?.invalid">Invalid Quantity</mat-error>
+    </mat-form-field>
+
+    <div formArrayName="files" *ngFor="let fileControl of filesArray.controls; let i = index">
+      <input type="file" (change)="handleFileInput($event, i)" accept="image/*" />
+    </div>
+    <div><button type="button" (click)="addFileInput()">Upload Another File</button>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [disabled]="!productForm.valid" (click)="onSubmit($event)">Create</button>
+</mat-dialog-actions>

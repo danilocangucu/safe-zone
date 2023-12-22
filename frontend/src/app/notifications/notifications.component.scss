@@ -1,0 +1,39 @@
+.notification {
+    position: fixed;
+    left: 50%;
+    top: 20%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    max-width: 800px;
+    padding: 20px;
+    background-color: #4956be;
+    color: aliceblue;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    word-wrap: break-word;
+    line-height: 1.5;
+    z-index: 2000;
+  }
+  h2 {
+    font-size: 1.2em;
+  }
+  
+  .notification.success {
+    background-color: #4caf50;
+  }
+
+  .notification.info {
+    background-color: #b9b8b8;
+    padding: 500px;
+  }
+  
+  .notification.warning {
+    background-color: #ff9800;
+  }
+
+  .notification.danger {
+    background-color: #f32121;
+  }

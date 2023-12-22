@@ -1,0 +1,29 @@
+.navbar {
+    background-color: #333;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.site-name {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+a {
+    color: rgb(212, 150, 150);
+    text-decoration: none;
+    border-radius: 15px;
+    padding: 8px;
+    &:hover {
+        box-shadow: 0 108px 300px rgba(223, 222, 222, 0.2);
+        cursor: pointer;
+        background-color: rgba(223, 222, 222, 0.2);
+    }
+}

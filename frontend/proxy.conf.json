@@ -1,0 +1,6 @@
+{
+    "/public/register": {
+      "target": "https://localhost:448",
+      "secure": false
+    }
+  }

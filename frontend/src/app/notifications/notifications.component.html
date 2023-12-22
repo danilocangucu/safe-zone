@@ -1,0 +1,4 @@
+<div *ngIf="notification.getValue()?.text" [ngClass]="['notification', notification.getValue()?.type]">
+{{ notification.getValue()?.text }}
+</div>
+  
