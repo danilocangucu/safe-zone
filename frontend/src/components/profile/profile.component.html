@@ -1,0 +1,37 @@
+<app-navbar></app-navbar>
+<app-notifications></app-notifications>
+
+<div *ngIf="loadingAvatar" class="loading-products">
+  <img class="loading-gif" src="https://i.gifer.com/ZKZg.gif" alt="" />
+  <div class="loading-products-message">Loading avatar...
+  </div>
+</div>
+<mat-card class="profile-card">
+  <img mat-card-image [src]="userAvatar" alt="User profile image" />
+  <mat-card-content>
+    <h2>{{ name }}</h2>
+    <p>ID: {{ id }}</p>
+    <p [ngSwitch]="userRole">
+      <span *ngSwitchCase="'USER_CLIENT'">Role: Client</span>
+      <span *ngSwitchCase="'USER_SELLER'">Role: Seller</span>
+      <span *ngSwitchDefault>Role: Unknown</span>
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <input
+      type="file"
+      #fileInput
+      style="display: none"
+      (change)="handleFileInput($event)"
+      accept="image/*"
+    />
+    <span *ngIf="userRole==='USER_SELLER'">
+      <button mat-raised-button color="primary" (click)="fileInput.click()">
+        Upload New Image
+      </button>
+    </span>
+    <button mat-raised-button color="warn" (click)="deleteUser()">
+      Delete User
+    </button>
+  </mat-card-actions>
+</mat-card>
