@@ -1,31 +1,46 @@
 pipeline {
    agent any
-   environment {
-      PATH = "$PATH:/usr/local/bin"
-    }
    stages {
        stage('Build') {
            steps {
-              sh 'docker-compose build'
+              sh 'docker compose --env-file .env.test build'
            }
        }
        stage('Test') {
            steps {
-               echo 'Testing..'
-               sh 'docker-compose up -d'
+               load "$JENKINS_HOME/.envvars/envVarsTest.groovy"
+               echo 'Testing...'
+               sh 'docker compose --env-file .env.test up -d'
+               echo 'Users MS...'
                dir('backend/users') {
-               sh './gradlew test'
+                sh './gradlew test'
                }
-               sh 'docker-compose down'
+               echo 'Products MS...'
+               dir('backend/products') {
+                sh './gradlew test'
+               }
+               echo 'Media MS...'
+               dir('backend/media') {
+                sh './gradlew test'
+               }
+               echo 'Frontend...'
+               dir('frontend') {
+                sh 'npm install'
+                sh 'npm test'
+               }
+               sh 'docker compose --env-file .env.test down'
            }
        }
        stage('Deploy') {
-           steps {
-               echo 'Deploying!!!!'
-               **** **** -p **** registry.digitalocean.com
-               docker tag buy-01-users-service:latest registry.digitalocean.com/docker-jenkins/buy-01-users-service:latest
-               docker push registry.digitalocean.com/docker-jenkins/buy-01-users-service:latest
-           }
-       }
-   }
+        steps {
+            load "$JENKINS_HOME/.envvars/envVarsDeploy.groovy"
+            sh "docker compose --env-file .env.deploy up -d"
+        }
+        }
+    }
+    post {
+            always {
+                emailext attachLog: true, body: 'Project: $PROJECT_NAME\nBuild #: $BUILD_NUMBER\nStatus: $BUILD_STATUS\nCheck console output at $BUILD_URL to view the results or read the attached log file.', subject: 'Build $BUILD_NUMBER: $BUILD_STATUS', to: 'danilojenkins@zohomail.eu'
+            }
+    }
 }
