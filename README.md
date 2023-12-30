@@ -6,7 +6,7 @@ Register as a client and view all the products on the platform.
 
 ---
 
-### Instructions:
+### Instructions
 
 1. Clone the repository.
 2. Open Docker and your IDE of choice.   
