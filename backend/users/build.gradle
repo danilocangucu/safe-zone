@@ -5,7 +5,7 @@ plugins {
     id "org.sonarqube" version "4.4.1.3373"
 }
 
-sonarqube {
+sonar {
     properties {
         property "sonar.projectKey", "danilocangucu_safe-zone_users"
         property "sonar.projectName", "safe-zone-users"
