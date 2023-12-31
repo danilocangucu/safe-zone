@@ -15,13 +15,13 @@ pipeline {
           steps {
               echo 'Analyzing with Sonarqube...'
               load "$JENKINS_HOME/.envvars/envVarsTest.groovy"
-                dir('backend/media') {
-                  withSonarQubeEnv('sonarqube') {
-                    sh "./gradlew sonar"
-                  }
-                }
+                // dir('backend/media') {
+                //   withSonarQubeEnv('sonarqube') {
+                //     sh "./gradlew sonar"
+                //   }
+                // }
                 dir('backend/users') {
-                  withSonarQubeEnv() {
+                  withSonarQubeEnv('sonarqube') {
                     sh "./gradlew sonar"
                   }
                 }
