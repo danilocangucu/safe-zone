@@ -25,6 +25,12 @@ pipeline {
                     sh "./gradlew sonar"
                   }
                 }
+                dir('frontend') {
+                  def scannerHome = tool 'SonarScanner';
+                  withSonarQubeEnv('sonarqube') {
+                    sh "${scannerHome}/bin/sonar-scanner"
+                  }
+                }
           }
       }
   }
