@@ -9,8 +9,7 @@ sonarqube {
     properties {
         property "sonar.projectKey", "danilocangucu_safe-zone_users"
         property "sonar.projectName", "safe-zone-users"
-        property "sonar.login", "squ_dd3c4b5816bba5cbee5d891b3fbdd290be08f212"
-  }
+    }
 }
 
 group = 'info.danilo'
