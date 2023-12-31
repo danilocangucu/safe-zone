@@ -7,8 +7,8 @@ plugins {
 
 sonarqube {
     properties {
-        property "sonar.projectKey", "danilocangucu_safe-zone_media"
-        property "sonar.projectName", "safe-zone-media"
+        property "sonar.projectKey", "danilocangucu_safe-zone_AYy2bVBdm5xNrOhPFCJg"
+        property "sonar.projectName", "safe-zone"
     }
 }
 
