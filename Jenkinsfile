@@ -21,7 +21,7 @@ pipeline {
                   }
                 }
                 dir('backend/users') {
-                  withSonarQubeEnv('sonarqube') {
+                  withSonarQubeEnv() {
                     sh "./gradlew sonar"
                   }
                 }
