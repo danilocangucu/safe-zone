@@ -4,12 +4,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SimpleTest {
     @Test
-    public void alwaysPassingTest() {
+    public void alwaysPassingTestX() {
         assertTrue(true);
     }
 
     @Test
-    public void alwaysPassingTest2() {
+    public void alwaysPassingTestXX() {
         assertTrue(true);
     }
 
