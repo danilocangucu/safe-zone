@@ -6,6 +6,11 @@ pipeline {
               checkout scm
           }
       }
+      stage('Run Tests') {
+         steps {
+             sh './gradlew test'
+        }
+      }
       stage('SQ Media Analysis') {
           steps {
               echo 'Analyzing with Sonarqube...'
