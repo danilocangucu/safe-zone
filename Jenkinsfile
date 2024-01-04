@@ -12,9 +12,7 @@ pipeline {
               load "$JENKINS_HOME/.envvars/envVarsTest.groovy"
                 dir('backend/media') {
                   withSonarQubeEnv('sonarqube') {
-                    sh """
-                    ./gradlew sonar -Psonar.projectKey=danilocangucu_safe-zone_media
-                    """
+                    sh "./gradlew sonar"
                   }
                 }
           }
