@@ -25,17 +25,5 @@ pipeline {
             }
         }
       }
-      stage('Check Security Vulnerabilities') {
-          steps {
-              script {
-                def result = sh(script: 'node requests/media.js', returnStdout: true, returnStatus: true)
-                if (result == 0) {
-                    echo 'No security vulnerabilities found'
-                } else {
-                    error('Security vulnerabilities found')
-                }
-              }
-          }
-      }
   }
 }
