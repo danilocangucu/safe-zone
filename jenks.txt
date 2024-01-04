@@ -1,11 +1,6 @@
 pipeline {
   agent any
   stages {
-      stage('Build') {
-           steps {
-              sh 'docker compose --env-file .env.test build'
-           }
-      }
       stage('SCM') {
           steps {
               checkout scm
@@ -23,6 +18,19 @@ pipeline {
                 dir('backend/users') {
                   withSonarQubeEnv('sonarqube') {
                     sh "./gradlew sonar"
+                  }
+                }
+                dir('backend/products') {
+                  withSonarQubeEnv('sonarqube') {
+                    sh "./gradlew sonar"
+                  }
+                }
+                dir('frontend') {
+                  script {
+                    def scannerHome = tool 'SonarScanner';
+                    withSonarQubeEnv('sonarqube') {
+                      sh "${scannerHome}/bin/sonar-scanner"
+                    }
                   }
                 }
           }
