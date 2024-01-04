@@ -89,7 +89,7 @@ public class MediaController {
     }
 
     // Class level variable to store CompletableFuture objects
-    private ConcurrentHashMap<String, CompletableFuture<String>> responseMap = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, CompletableFuture<String>> responseMap = new ConcurrentHashMap<>();
 
     private String waitForKafkaResponse(String correlationId) throws InterruptedException, TimeoutException {
         CompletableFuture<String> future = new CompletableFuture<>();
@@ -175,9 +175,7 @@ public class MediaController {
         long expiration = TimeUnit.DAYS.toSeconds(365);
         URL signedUrl = this.storage.signUrl(blobInfo, expiration, TimeUnit.SECONDS);
 
-        Media savedInSaveMedia = mediaService.save(request, signedUrl.toString());
-
-        return savedInSaveMedia;
+        return mediaService.save(request, signedUrl.toString());
     }
 
     @GetMapping(value = "/{productId}")
