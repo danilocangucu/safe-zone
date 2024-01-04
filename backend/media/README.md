@@ -1,3 +1,9 @@
+## Configuration
+
+To configure this project, replace the `MY_SECRET_KEY` in the `config.js` file with your actual secret key.
+
+javascript const config = { secretKey: 'MY_SECRET_KEY', // Other configurations... };
+
 #### Backend - Media
 
 #### Test Media-endpoint in Postman

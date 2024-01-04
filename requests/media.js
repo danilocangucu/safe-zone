@@ -13,6 +13,7 @@ fetch(
 )
   .then((response) => response.json())
   .then((data) => {
+    console.log("data.total ", data.total);
     if (data.total > 0) {
       console.log(`has issues`);
     } else {
