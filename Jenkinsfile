@@ -19,7 +19,7 @@ pipeline {
       }
       stage('SQ Media Quality Gate') {
         steps {
-            sleep 2
+            sleep 5
             timeout(time: 1, unit: 'HOURS') {
                 waitForQualityGate abortPipeline: true
             }
