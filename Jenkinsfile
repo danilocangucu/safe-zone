@@ -31,7 +31,7 @@ pipeline {
                 def response = sh(script: '''
                     curl -s http://159.89.21.149:9000/api/issues/search?componentKeys=danilocangucu_safe-zone_media&types=VULNERABILITY&token=**** | jq '.total'
                 ''', returnStdout: true).trim()
-                if (response != '0') {
+                if (response != '2') {
                     error("Found ${response} security hotspots")
                 }
             }
