@@ -1,13 +1,3 @@
-/*
- * This is a simple SQL injection vulnerability:
- * SELECT * FROM users WHERE username='admin' AND password='1234'
- */
-
-/*
-* This is a simple XSS vulnerability:
-* <img src='x' onerror='alert("XSS")'>
-*/
-
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
