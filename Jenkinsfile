@@ -25,17 +25,17 @@ pipeline {
             }
         }
       }
-      stage('Check Security Hotspots') {
-        steps {
-            script {
-                def response = sh(script: '''
-                    curl -s http://159.89.21.149:9000/api/issues/search?componentKeys=danilocangucu_safe-zone_media&types=VULNERABILITY&token=**** | jq '.total'
-                ''', returnStdout: true).trim()
-                if (response != '2') {
-                    error("Found ${response} security hotspots")
+      stage('Check Security Vulnerabilities') {
+          steps {
+              script {
+                def result = sh(script: 'node requests/media.js', returnStdout: true, returnStatus: true)
+                if (result == 0) {
+                    echo 'No security vulnerabilities found'
+                } else {
+                    error('Security vulnerabilities found')
                 }
-            }
-        }
+              }
+          }
       }
   }
 }
