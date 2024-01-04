@@ -8,7 +8,9 @@ pipeline {
       }
       stage('Run Tests') {
          steps {
+          dir('backend/media') {
              sh './gradlew test'
+          }
         }
       }
       stage('SQ Media Analysis') {
