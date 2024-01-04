@@ -25,5 +25,17 @@ pipeline {
             }
         }
       }
+      stage('Check Security Hotspots') {
+        steps {
+            script {
+                def response = sh(script: '''
+                    curl -s http://159.89.21.149:9000/api/issues/search?componentKeys=danilocangucu_safe-zone_media&types=VULNERABILITY&token=**** | jq '.total'
+                ''', returnStdout: true).trim()
+                if (response != '0') {
+                    error("Found ${response} security hotspots")
+                }
+            }
+        }
+      }
   }
 }
