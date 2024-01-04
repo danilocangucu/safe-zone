@@ -19,8 +19,8 @@ COPY build.gradle .
 COPY settings.gradle .
 COPY src src
 
-# Build the project
-RUN gradle build
+# Assemble the project
+RUN gradle assemble
 
 # Run stage
 FROM openjdk:17
