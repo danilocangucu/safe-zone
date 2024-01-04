@@ -15,6 +15,13 @@ pipeline {
                     sh "./gradlew sonar"
                   }
                 }
+                stage('Media-MS Quality Gate') {
+                  steps {
+                    timeout(time: 1, unit: 'HOURS') {
+                        waitForQualityGate abortPipeline: true
+                    }
+                  }
+                }
                 dir('backend/users') {
                   withSonarQubeEnv('sonarqube') {
                     sh "./gradlew sonar"
