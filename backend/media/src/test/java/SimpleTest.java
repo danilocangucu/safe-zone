@@ -9,8 +9,8 @@ public class SimpleTest {
         assertTrue(true);
     }
 
-/*    @Test
+    @Test
     public void alwaysFailingTest() {
         fail();
-    }*/
+    }
 }
