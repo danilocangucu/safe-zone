@@ -122,38 +122,6 @@ public class MediaController {
         }
     }
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file, @ModelAttribute Media request, HttpServletRequest httpRequest) throws TimeoutException {
-        try {
-            ResponseEntity<String> badRequestResponse = validateFile(file);
-            if (badRequestResponse != null) return badRequestResponse;
-
-            String productId = request.getProductId();
-            String userId = JwtService.getUserIdFromRequest(httpRequest);
-            logger.info("mediaUserId: {}", userId);
-            logger.info("mediaProductId: {}", productId);
-            
-            String correlationId = UUID.randomUUID().toString();
-            kafkaSender.send("user-product-ownership", correlationId + " " + userId + " " + productId);
-
-            String ownershipResponse = waitForKafkaResponse(correlationId);
-            if (!"true".equals(ownershipResponse)) {
-                return new ResponseEntity<>("User is not owner of the product", HttpStatus.FORBIDDEN);
-            }
-
-            Media savedFile = saveMedia(file, request);
-            return new ResponseEntity<>(savedFile, HttpStatus.OK);
-        } catch (IOException | InterruptedException e) {
-            logger.error("Error in uploadFile method", e);
-            return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-
-
-
-
-
     private static ResponseEntity<String> validateFile(MultipartFile file) {
         if (file.isEmpty()) {
             return new ResponseEntity<>("Please select a file!", HttpStatus.BAD_REQUEST);
