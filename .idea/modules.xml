@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/01-buy_products.main.iml" filepath="$PROJECT_DIR$/.idea/modules/01-buy_products.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/buy01-users.main.iml" filepath="$PROJECT_DIR$/.idea/modules/buy01-users.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/media.main.iml" filepath="$PROJECT_DIR$/.idea/modules/media.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/safe-zone.iml" filepath="$PROJECT_DIR$/.idea/safe-zone.iml" />
     </modules>
   </component>
