@@ -1,8 +1,8 @@
 {
   "type": "service_account",
   "project_id": "buy01-media",
-********
-********
+  "private_key_id": "__PRIVATE_KEY_ID__",
+  "private_key": "__PRIVATE_KEY__",
   "client_email": "firebase-adminsdk-gn0ac@buy01-media.iam.gserviceaccount.com",
   "client_id": "109781511397326851857",
   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
