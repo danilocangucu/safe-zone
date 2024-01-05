@@ -2,21 +2,33 @@ package info.OPC.configs;
 
 import java.util.Date;
 import java.util.function.Function;
-
 import javax.crypto.SecretKey;
-
 import org.springframework.stereotype.Service;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
+import javax.crypto.KeyGenerator;
+import java.security.NoSuchAlgorithmException;
 
 @Service
 public class JwtService {
+    private static SecretKey generateSecretKey() throws NoSuchAlgorithmException {
+        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+        keyGenerator.init(128); // Key size
+        return keyGenerator.generateKey();
+    }
 
-********
+    private static final String SECRET_KEY;
+
+    static {
+        try {
+            SECRET_KEY = String.valueOf(generateSecretKey());
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static String extractSubject(String token) {
         return extractClaim(token, Claims::getSubject);
