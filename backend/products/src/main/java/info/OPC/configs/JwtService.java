@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @Service
 public class JwtService {
 
-    private static final String ****"****";
+********
 
     public static String extractSubject(String token) {
         return extractClaim(token, Claims::getSubject);
