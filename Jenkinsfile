@@ -21,7 +21,7 @@ pipeline {
         steps {
             sleep 10
             timeout(time: 15, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline: true
+              waitForQualityGate abortPipeline: true
             }
         }
       }
@@ -40,7 +40,7 @@ pipeline {
         steps {
             sleep 10
             timeout(time: 15, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline: true
+              waitForQualityGate abortPipeline: true
             }
         }
       }
@@ -59,7 +59,27 @@ pipeline {
         steps {
             sleep 10
             timeout(time: 15, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline: true
+              waitForQualityGate abortPipeline: true
+            }
+        }
+      }
+      stage('SQ Frontend Analysis') {
+        steps {
+            dir('frontend') {
+              script {
+                def scannerHome = tool 'SonarScanner';
+                withSonarQubeEnv('sonarqube') {
+                  sh "${scannerHome}/bin/sonar-scanner"
+                }
+              }
+            }
+        }
+      }
+      stage('SQ Frontend Quality Gate') {
+        steps {
+            sleep 10
+            timeout(time: 15, unit: 'MINUTES') {
+              waitForQualityGate abortPipeline: true
             }
         }
       }
