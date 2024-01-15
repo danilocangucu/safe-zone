@@ -44,5 +44,24 @@ pipeline {
             }
         }
       }
+      stage('SQ Products Analysis') {
+          steps {
+              echo 'Analyzing Products with Sonarqube...'
+              load "$JENKINS_HOME/.envvars/envVarsTest.groovy"
+                dir('backend/products') {
+                  withSonarQubeEnv('sonarqube') {
+                    sh "./gradlew sonar"
+                  }
+                }
+          }
+      }
+      stage('SQ Products Quality Gate') {
+        steps {
+            sleep 10
+            timeout(time: 15, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline: true
+            }
+        }
+      }
   }
 }
