@@ -8,7 +8,7 @@ pipeline {
       }
       stage('SQ Media Analysis') {
           steps {
-              echo 'Analyzing with Sonarqube...'
+              echo 'Analyzing Media with Sonarqube...'
               load "$JENKINS_HOME/.envvars/envVarsTest.groovy"
                 dir('backend/media') {
                   withSonarQubeEnv('sonarqube') {
@@ -20,7 +20,26 @@ pipeline {
       stage('SQ Media Quality Gate') {
         steps {
             sleep 10
-            timeout(time: 1, unit: 'HOURS') {
+            timeout(time: 15, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline: true
+            }
+        }
+      }
+      stage('SQ Users Analysis') {
+          steps {
+              echo 'Analyzing Users with Sonarqube...'
+              load "$JENKINS_HOME/.envvars/envVarsTest.groovy"
+                dir('backend/users') {
+                  withSonarQubeEnv('sonarqube') {
+                    sh "./gradlew sonar"
+                  }
+                }
+          }
+      }
+      stage('SQ Users Quality Gate') {
+        steps {
+            sleep 10
+            timeout(time: 15, unit: 'MINUTES') {
                 waitForQualityGate abortPipeline: true
             }
         }
