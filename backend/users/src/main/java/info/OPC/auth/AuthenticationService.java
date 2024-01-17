@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import info.OPC.configs.JwtService;
 import info.OPC.models.User;
+import info.OPC.models.UserRegistrationDTO;
 import info.OPC.repositories.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -35,25 +36,25 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(User request) {
-        Set<ConstraintViolation<User>> violations = validator.validate(request);
+    public AuthenticationResponse register(UserRegistrationDTO registrationDTO) {
+        Set<ConstraintViolation<UserRegistrationDTO>> violations = validator.validate(registrationDTO);
         if (!violations.isEmpty()) {
             buildStringAndThrowException(violations);
         }
 
         var user = User.builder()
-            .name(request.getName())
-            .email(request.getEmail())
-            .password(passwordEncoder.encode(request.getPassword()))
-            .role(request.getRole())
-            .avatar(request.getAvatar())
-            .build();
+                .name(registrationDTO.getName())
+                .email(registrationDTO.getEmail())
+                .password(passwordEncoder.encode(registrationDTO.getPassword()))
+                .role(registrationDTO.getRole())
+                .build();
         var savedUser = userRepository.save(user);
         var jwtToken = jwtService.generateToken(savedUser);
         return AuthenticationResponse.builder()
-            .token(jwtToken)
-            .build();
+                .token(jwtToken)
+                .build();
     }
+
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         Set<ConstraintViolation<AuthenticationRequest>> violations = validator.validate(request);

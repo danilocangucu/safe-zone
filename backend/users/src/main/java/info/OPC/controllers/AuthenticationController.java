@@ -1,6 +1,7 @@
 package info.OPC.controllers;
 
 import info.OPC.models.User;
+import info.OPC.models.UserRegistrationDTO;
 import info.OPC.repositories.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -28,17 +29,18 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(
-            @Valid @RequestBody User request,
+            @Valid @RequestBody UserRegistrationDTO registrationDTO,
             BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()) {
             return createAndSendErrorResponse(bindingResult);
         }
-        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+        if (userRepository.findByEmail(registrationDTO.getEmail()).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already registered");
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.register(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.register(registrationDTO));
     }
+
 
     @PostMapping("/authenticate")
     public ResponseEntity<?> authenticate(
