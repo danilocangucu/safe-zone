@@ -40,7 +40,7 @@ import java.io.IOException;
     private MediaService mediaService;
 
     @Test
-    protected void testKafkaSend() {
+    void testKafkaSend() {
         String topic = "testTopic";
         Object message = new Object();
 
@@ -51,7 +51,7 @@ import java.io.IOException;
     }
 
     @Test
-    protected void testMediaSave() throws IOException {
+    void testMediaSave() throws IOException {
         String id = "123";
         String filePath = "test/path";
         String productId = "p123";
@@ -67,7 +67,7 @@ import java.io.IOException;
     }
 
     @Test
-    protected void testMediaDelete() {
+    void testMediaDelete() {
         String productId = "p123";
 
         mediaService.delete(productId);

@@ -37,7 +37,7 @@ import static org.mockito.Mockito.when;
     }
 
     @Test
-    protected void getUserIdFromHeader_WhenUserExists() {
+    void getUserIdFromHeader_WhenUserExists() {
         String fakeToken = "Bearer abcdef";
         String expectedUserId = "12345";
         String userEmail = "test@example.com";
@@ -57,7 +57,7 @@ import static org.mockito.Mockito.when;
     }
 
     @Test
-    protected void getUserIdFromHeader_WhenUserDoesNotExist() {
+    void getUserIdFromHeader_WhenUserDoesNotExist() {
         String fakeToken = "Bearer abcdef";
         String userEmail = "nonexistent@example.com";
 
