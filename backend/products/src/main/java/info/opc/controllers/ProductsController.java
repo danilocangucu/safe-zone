@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import info.opc.configs.JwtService;
-import info.opc.views.PrivateProductView;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +15,9 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import com.fasterxml.jackson.annotation.JsonView;
-
 import info.opc.models.Product;
 import info.opc.repositories.ProductRepository;
 import info.opc.services.ProductService;
-import info.opc.views.PublicProductView;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -35,7 +31,6 @@ public class ProductsController {
     ProductRepository productRepository;
 
     @GetMapping("/products")
-    @JsonView(PrivateProductView.class)
     public ResponseEntity<?> findAllFromUser(
             HttpServletRequest request) {
         String id = JwtService.getUserIdFromRequest(request);
@@ -47,7 +42,6 @@ public class ProductsController {
         return ResponseEntity.ok(products);
     }
 
-    @JsonView(PrivateProductView.class)
     @PostMapping("/products")
     public ResponseEntity<Product> createProduct(
             @Valid @RequestBody Product product,
@@ -66,7 +60,6 @@ public class ProductsController {
         return ResponseEntity.ok(createdProduct);
     }
 
-    @JsonView(PublicProductView.class)
     @GetMapping("/products/{requestedId}")
     public ResponseEntity<Product> findById(
             @PathVariable String requestedId,

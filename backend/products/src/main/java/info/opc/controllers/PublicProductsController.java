@@ -6,11 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.fasterxml.jackson.annotation.JsonView;
-
 import info.opc.models.Product;
 import info.opc.repositories.ProductRepository;
-import info.opc.views.PublicProductView;
 import lombok.RequiredArgsConstructor;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -22,7 +19,6 @@ public class PublicProductsController {
     ProductRepository productRepository;
 
     @GetMapping("/products")
-    @JsonView(PublicProductView.class)
     public ResponseEntity<List<Product>> findAll(
             HttpServletRequest request
     ) {
