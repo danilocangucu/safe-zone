@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 import java.io.IOException;
 
 @ExtendWith(MockitoExtension.class)
-public class ServicesTest {
+    class ServicesTest {
 
     private static final Logger logger = LoggerFactory.getLogger(ServicesTest.class);
 
@@ -40,7 +40,7 @@ public class ServicesTest {
     private MediaService mediaService;
 
     @Test
-    public void testKafkaSend() {
+    protected void testKafkaSend() {
         String topic = "testTopic";
         Object message = new Object();
 
@@ -51,7 +51,7 @@ public class ServicesTest {
     }
 
     @Test
-    public void testMediaSave() throws IOException {
+    protected void testMediaSave() throws IOException {
         String id = "123";
         String filePath = "test/path";
         String productId = "p123";
@@ -67,7 +67,7 @@ public class ServicesTest {
     }
 
     @Test
-    public void testMediaDelete() {
+    protected void testMediaDelete() {
         String productId = "p123";
 
         mediaService.delete(productId);
