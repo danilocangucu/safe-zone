@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class UserServiceTest {
+    class UserServiceTest {
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceTest.class);
 
@@ -37,7 +37,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getUserIdFromHeader_WhenUserExists() {
+    protected void getUserIdFromHeader_WhenUserExists() {
         String fakeToken = "Bearer abcdef";
         String expectedUserId = "12345";
         String userEmail = "test@example.com";
@@ -57,7 +57,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getUserIdFromHeader_WhenUserDoesNotExist() {
+    protected void getUserIdFromHeader_WhenUserDoesNotExist() {
         String fakeToken = "Bearer abcdef";
         String userEmail = "nonexistent@example.com";
 
