@@ -1,7 +1,6 @@
 package info.opc.auth;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import info.opc.views.UserView;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -20,7 +19,6 @@ public class AuthenticationRequest {
     @NotBlank(message = "Email cannot be blank")
     @Email(message = "Email should be valid")
     @Size(min=1, max=40, message = "Email must be between 1 and 40 characters")
-    @JsonView(UserView.class)
     private String email;
 
     @NotNull(message = "Password cannot be null")

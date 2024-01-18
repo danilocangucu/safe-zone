@@ -1,10 +1,8 @@
 package info.opc.controllers;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import info.opc.models.User;
 import info.opc.repositories.UserRepository;
 import info.opc.services.UserService;
-import info.opc.views.UserView;
 import jakarta.annotation.security.PermitAll;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +27,9 @@ public class UsersController {
 
     @Autowired
     UserRepository userRepository;
-//    @Autowired
-//    ProductRepository productRepository;
-//    TODO import productRepository from product microservice?
 
     @GetMapping("/private/users")
     @PermitAll
-    @JsonView(UserView.class)
     public ResponseEntity<?> findUser(
             @RequestHeader("Authorization") String authHeader) {
         String userId = userService.getUserIdFromHeader(authHeader);

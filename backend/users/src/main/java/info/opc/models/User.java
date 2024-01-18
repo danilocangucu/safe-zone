@@ -4,14 +4,11 @@ import java.util.Collection;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import info.opc.views.AdminView;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.Email;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import info.opc.views.UserView;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,20 +25,17 @@ import lombok.Data;
 @Document(collection = "users")
 public class User implements UserDetails {
     @Id
-    @JsonView(AdminView.class)
     private String id;
 
     @NotNull(message = "Name cannot be null")
     @NotBlank(message = "Name cannot be blank")
     @Size(min=1, max=20, message = "Name must be between 1 and 20 characters")
-    @JsonView(UserView.class)
     private String name;
 
     @NotNull(message = "Email cannot be null")
     @NotBlank(message = "Email cannot be blank")
     @Email(message = "Email should be valid")
     @Size(min=1, max=40, message = "Email must be between 1 and 40 characters")
-    @JsonView(UserView.class)
     private String email;
 
     @NotNull(message = "Password cannot be null")
@@ -51,7 +45,6 @@ public class User implements UserDetails {
 
     @JsonDeserialize(using = UserRoleDeserializer.class)
     @ValidRole
-    @JsonView(UserView.class)
     private UserRole role;
 
     private String avatar;
